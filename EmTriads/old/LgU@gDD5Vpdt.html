@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="v2_otherStyles.css">
+<link rel="stylesheet" href="v2_black.css">
+<link rel="stylesheet" href="v2_coral.css">
+<link rel="stylesheet" href="v2_yellow.css">
+<link rel="stylesheet" href="v2_red.css">
+</head>
+<body>
+<div id="v2_grid"></div>
+<div class="center-div" id="v2_durationButtons"></div>
+<script>
+$(document).ready(function () {
+    var v2_rows = 4;
+    var v2_cols = 16;
+    var v2_grid = "";
+    var v2_buttonTexts = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17"];
+    for (var i = 18; i <= 65; i++) {
+        v2_buttonTexts.push(i.toString());
+    }
+    for (var i = 0; i < v2_rows; i++) {
+        for (var j = 0; j < v2_cols; j++) {
+            var v2_buttonIndex = v2_buttonTexts[i * v2_cols + j];
+            v2_grid += '<button class="btn btn-primary v2_grid-button v2_button-' + v2_buttonIndex + '">' + v2_buttonTexts[i * v2_cols + j] + '</button>';
+        }
+        v2_grid += '<br>';
+    }
+    $('#v2_grid').html(v2_grid);
+
+    // Create buttons for durationInSeconds
+    for (var i = 3; i <= 25; i++) {
+        $('#v2_durationButtons').append('<button class="btn btn-custom" onclick="v2_setDuration(' + i + ')">' + i + '</button>');
+    }
+
+    // Function to set durationInSeconds and restart the code
+    window.v2_setDuration = function(seconds) {
+        window.v2_durationInSeconds = seconds;
+        window.v2_intervalTime = seconds * 1000;
+        if (window.v2_interval) {
+            clearInterval(window.v2_interval);
+        }
+        window.v2_currentStep = 0;  // Reset currentStep to zero
+        window.v2_interval = setInterval(v2_triggerHover, window.v2_intervalTime);
+        v2_triggerHover();  // Restart the code immediately
+    }
+
+    var v2_arr1 = [20, 45, 60, 19];
+    var v2_arr2 = [18, 33, 52, 19];
+    var v2_arr3 = [22, 40, 65, 23];
+    var v2_arr4 = [28, 46, 55, 29];
+    var v2_arr5 = [30, 50, 64, 31];
+    var v2_arr6 = [35, 48, 62, 36];
+    var v2_arr7 = [40, 52, 58, 41];
+    var v2_arr8 = [42, 54, 63, 43];
+    var v2_arr9 = [44, 56, 61, 45];
+    var v2_arr10 = [46, 58, 60, 47];
+    var v2_stepsToHover = [
+        v2_arr1, v2_arr2, v2_arr3, v2_arr4, v2_arr5, v2_arr6, v2_arr5, v2_arr4, v2_arr3, v2_arr4, v2_arr5, v2_arr6,
+        v2_arr7, v2_arr8, v2_arr7, v2_arr6, v2_arr5, v2_arr6, v2_arr7, v2_arr8, v2_arr9, v2_arr10, v2_arr9, v2_arr8,
+        v2_arr7, v2_arr8, v2_arr9, v2_arr10, v2_arr1, v2_arr2, v2_arr1, v2_arr1, v2_arr2, v2_arr3, v2_arr4, v2_arr3, v2_arr2
+    ];
+    window.v2_currentStep = 0;
+    function v2_triggerHover() {
+        $('.v2_grid-button').removeClass('darkBlue lightCoral medBlue lightBlue');
+        var v2_buttonsToHover = v2_stepsToHover[window.v2_currentStep];
+        var colors = ['darkBlue', 'lightCoral', 'medBlue', 'lightBlue'];
+        v2_buttonsToHover.forEach(function (buttonIndex, index) {
+            var colorClass = colors[index];
+            $('.v2_button-' + buttonIndex).addClass(colorClass);
+        });
+        window.v2_currentStep = (window.v2_currentStep + 1) % v2_stepsToHover.length;
+    }
+    v2_triggerHover();
+    window.v2_durationInSeconds = 2;
+    window.v2_intervalTime = window.v2_durationInSeconds * 1000;
+    window.v2_interval = setInterval(v2_triggerHover, window.v2_intervalTime);
+});
+</script>
+</body>
+</html>

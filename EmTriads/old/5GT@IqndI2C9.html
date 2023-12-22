@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="v2_otherStyles.css">
+<link rel="stylesheet" href="v2_black.css">
+<link rel="stylesheet" href="v2_coral.css">
+<link rel="stylesheet" href="v2_yellow.css">
+<link rel="stylesheet" href="v2_red.css">
+
+</head>
+<body>
+<div id="v2_grid"></div>
+<script>
+$(document).ready(function () {
+    var v2_rows = 4;
+    var v2_cols = 16;
+    var v2_grid = "";
+    var v2_buttonTexts = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17"];
+    for (var i = 18; i <= 65; i++) {
+        v2_buttonTexts.push(i.toString());
+    }
+    for (var i = 0; i < v2_rows; i++) {
+        for (var j = 0; j < v2_cols; j++) {
+            var v2_buttonIndex = i * v2_cols + j;
+            v2_grid += '<button class="btn btn-primary v2_grid-button v2_button-' + v2_buttonIndex + '">' + v2_buttonTexts[v2_buttonIndex] + '</button>';
+        }
+        v2_grid += '<br>';
+    }
+    $('#v2_grid').html(v2_grid);
+});
+</script>
+</body>
+</html>
